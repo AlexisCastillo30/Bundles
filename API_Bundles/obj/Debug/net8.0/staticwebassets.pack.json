@@ -1,27 +1,31 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\css\\main.css",
+      "Id": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\bundles\\ExportToPdfsApp.zip",
+      "PackagePath": "staticwebassets\\bundles\\ExportToPdfsApp.zip"
+    },
+    {
+      "Id": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\css\\main.css",
       "PackagePath": "staticwebassets\\css\\main.css"
     },
     {
-      "Id": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\index.html",
+      "Id": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\APSTree.js",
-      "PackagePath": "staticwebassets\\js\\APSTree.js"
+      "Id": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\ApsDesignAutomation.js",
+      "PackagePath": "staticwebassets\\js\\ApsDesignAutomation.js"
     },
     {
-      "Id": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\main.js",
+      "Id": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\main.js",
       "PackagePath": "staticwebassets\\js\\main.js"
     },
     {
-      "Id": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\sidebar.js",
+      "Id": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\sidebar.js",
       "PackagePath": "staticwebassets\\js\\sidebar.js"
     },
     {
-      "Id": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\viewer.js",
+      "Id": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\viewer.js",
       "PackagePath": "staticwebassets\\js\\viewer.js"
     },
     {

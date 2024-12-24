@@ -9,8 +9,12 @@
   <ItemGroup>
     <PackageReference Include="Autodesk.Authentication" Version="2.0.0-beta4" />
     <PackageReference Include="Autodesk.DataManagement" Version="2.0.0-beta4" />
+    <PackageReference Include="Autodesk.Forge" Version="1.9.9" />
+    <PackageReference Include="Autodesk.Forge.DesignAutomation" Version="5.1.2" />
     <PackageReference Include="Autodesk.ModelDerivative" Version="2.0.0-beta3" />
     <PackageReference Include="Autodesk.Oss" Version="2.0.0-beta2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.36" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="6.0.36" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7pH7P/r7rZmabrO9CGZ68fC82RARMZk/nH4KR/9Nlko=",
+  "Hash": "Kv0IyUi/Z/3Us7cqjAaXu17zwbYp+vlMhhvKho59gLw=",
   "Source": "hubsbrowser24",
   "BasePath": "_content/hubsbrowser24",
   "Mode": "Default",
@@ -10,17 +10,36 @@
     {
       "Name": "hubsbrowser24\\wwwroot",
       "Source": "hubsbrowser24",
-      "ContentRoot": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
       "BasePath": "_content/hubsbrowser24",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\css\\main.css",
+      "Identity": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\bundles\\ExportToPdfsApp.zip",
       "SourceId": "hubsbrowser24",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
+      "BasePath": "_content/hubsbrowser24",
+      "RelativePath": "bundles/ExportToPdfsApp.zip",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\bundles\\ExportToPdfsApp.zip"
+    },
+    {
+      "Identity": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\css\\main.css",
+      "SourceId": "hubsbrowser24",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
       "BasePath": "_content/hubsbrowser24",
       "RelativePath": "css/main.css",
       "AssetKind": "All",
@@ -36,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\css\\main.css"
     },
     {
-      "Identity": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\index.html",
       "SourceId": "hubsbrowser24",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
       "BasePath": "_content/hubsbrowser24",
       "RelativePath": "index.html",
       "AssetKind": "All",
@@ -55,12 +74,12 @@
       "OriginalItemSpec": "wwwroot\\index.html"
     },
     {
-      "Identity": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\APSTree.js",
+      "Identity": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\ApsDesignAutomation.js",
       "SourceId": "hubsbrowser24",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
       "BasePath": "_content/hubsbrowser24",
-      "RelativePath": "js/APSTree.js",
+      "RelativePath": "js/ApsDesignAutomation.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -71,13 +90,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\APSTree.js"
+      "OriginalItemSpec": "wwwroot\\js\\ApsDesignAutomation.js"
     },
     {
-      "Identity": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\main.js",
+      "Identity": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\main.js",
       "SourceId": "hubsbrowser24",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
       "BasePath": "_content/hubsbrowser24",
       "RelativePath": "js/main.js",
       "AssetKind": "All",
@@ -93,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\js\\main.js"
     },
     {
-      "Identity": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\sidebar.js",
+      "Identity": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\sidebar.js",
       "SourceId": "hubsbrowser24",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
       "BasePath": "_content/hubsbrowser24",
       "RelativePath": "js/sidebar.js",
       "AssetKind": "All",
@@ -112,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\js\\sidebar.js"
     },
     {
-      "Identity": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\js\\viewer.js",
+      "Identity": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\js\\viewer.js",
       "SourceId": "hubsbrowser24",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\bayron.cuesta\\source\\repos\\bundles\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\bayron.cuesta\\OneDrive - AECOM\\Documentos\\GitHub\\Bundles\\API_Bundles\\wwwroot\\",
       "BasePath": "_content/hubsbrowser24",
       "RelativePath": "js/viewer.js",
       "AssetKind": "All",
