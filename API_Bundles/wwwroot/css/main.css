@@ -1,0 +1,30 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    padding-top: 60px; /* para la navbar */
+    margin-right: 20px;
+    font-family: sans-serif;
+}
+
+.fill {
+    height: calc(100vh - 80px);
+}
+
+#tree {
+    padding: 10px;
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+#apsViewer {
+    width: 100%;
+    height: calc(100vh - 200px);
+}
+
+.navbar-fixed-top {
+    min-height: 50px !important;
+}

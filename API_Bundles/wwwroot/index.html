@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Exportar PDF con InspireTree + Visor APS</title>
+
+    <!-- =========================================
+         Estilos y Scripts de Autodesk APS Viewer
+       ========================================= -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" />
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+
+    <!-- =========================================
+         Bootstrap y librerías comunes
+       ========================================= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" />
+
+    <!-- Librería para copiar texto al portapapeles (Modal BIM 360) -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+
+    <!-- =========================================
+         Lodash (DEBE ir antes de InspireTree)
+       ========================================= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+
+    <!-- =========================================
+         InspireTree (en vez de jsTree)
+       ========================================= -->
+    <link rel="stylesheet" href="https://unpkg.com/inspire-tree-dom@4.0.6/dist/inspire-tree-light.min.css">
+    <script src="https://unpkg.com/inspire-tree@4.3.1/dist/inspire-tree.js"></script>
+    <script src="https://unpkg.com/inspire-tree-dom@4.0.6/dist/inspire-tree-dom.min.js"></script>
+
+    <!-- =========================================
+         Nuestros estilos y scripts
+       ========================================= -->
+    <!-- (Si tienes un main.css) -->
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <!-- Scripts de tu proyecto (viewer.js, sidebar.js, main.js, etc.)
+         Ajusta la ruta si es /js/... o ./js/... según tu hosting.
+         Los pondremos más abajo del body para que carguen al final. -->
+
+</head>
+<body>
+    <!-- Barra de navegación (Bootstrap) -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav left col-lg-6">
+                <li>
+                    <a href="http://developer.autodesk.com" target="_blank">
+                        <img alt="Autodesk APS" src="https://cdn.autodesk.io/logo/black/simple.png" height="20" />
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Botón para habilitar BIM 360 en caso necesario -->
+            <ul class="nav navbar-nav right col-lg-2">
+                <li>
+                    <div style="float: right; margin-top: 15px;">
+                        <span style="padding-right: 5px;" data-toggle="modal" data-target="#provisionAccountModal" title="Habilitar mi cuenta BIM 360">
+                            <span class="glyphicon glyphicon-cog glyphiconTop mlink"></span>
+                            Habilitar BIM 360
+                        </span>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Botón para configurar AppBundle & Activity (Design Automation) -->
+            <ul class="nav navbar-nav right col-lg-2">
+                <li>
+                    <div style="float: right; margin-top: 15px; cursor: pointer;">
+                        <span style="padding-right: 5px;" data-toggle="modal" data-target="#defineActivityModal" title="Configurar AppBundle & Activity">
+                            <span class="glyphicon glyphicon-cog glyphiconTop mlink"></span> Configurar
+                        </span>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Botones de Sign In / Sign Out -->
+            <ul class="nav navbar-nav right col-lg-2">
+                <div style="padding-top: 10px; text-align: right;">
+                <li>
+                    <button class="btn btn-sm btn-default" id="autodeskSigninButton" hidden>
+                        Iniciar Sesión &nbsp;&nbsp;
+                        <img src="https://cdn.autodesk.io/autodesk.png" height="20">
+                    </button>
+                    <button class="btn btn-sm btn-default" id="autodeskSignOutButton" hidden>
+                        Cerrar Sesión &nbsp;&nbsp;<span id="userInfo"></span>
+                    </button>
+                </li>
+        </div>
+        </ul>
+        </div>
+    </nav>
+    <!-- Fin de navbar -->
+
+    <div class="container-fluid fill">
+        <div class="row fill">
+            <!-- Panel izquierdo: InspireTree (similar a sourceHubs) -->
+            <div class="col-sm-3 fill">
+                <br />
+                <div>
+                    <label><h4>Seleccionar archivo Revit</h4></label>
+                </div>
+                <div class="panel panel-default fill">
+                    <div class="panel-heading" data-toggle="tooltip" style="padding: 0px;">
+                        <span id="refreshTree" class="glyphicon glyphicon-refresh" style="cursor: pointer; display: none" title="Refrescar lista de archivos"></span>
+                    </div>
+                    <div id="tree" style="overflow: auto; height: calc(100vh - 250px);">
+                        <div style="padding-top: 100px; text-align: center;">
+                            <br /><br /><br />
+                            Es posible que necesites habilitar tu<br /> cuenta BIM 360 Docs para esta app.<br />
+                            <a href="https://aps.autodesk.com/blog/bim-360-docs-provisioning-forge-apps" target="_blank">Más info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel central: Visor APS -->
+            <div class="col-sm-6 fill">
+                <div class="row fill">
+                    <div class="col-sm-11 fill">
+                        <div style="padding-top: 10px; text-align: center;">
+                            <h2><b>Visor del modelo</b></h2>
+                        </div>
+                        <div id="apsViewer" style="height: calc(100vh - 200px);"></div>
+                        <div class="col-sm-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel derecho: Exportar a PDF -->
+            <div class="col-sm-3 fill">
+                <div class="row">
+                    <div style="padding-top: 10px; text-align: center;">
+                        <h2><b>Exportar a PDF</b></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="padding-top: 10px; text-align: center;">
+                        <form class="bs-example bs-example-form" role="form">
+                            <div class="row">
+                                <div style="padding-top: 10px; text-align: left;">
+                                    <div class="col-lg-12">
+                                        <div style="text-align: left;">
+                                            <label>Seleccionar tipos de vista</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="drawingSheet" checked>
+                                            </span>
+                                            <label class="form-control">Drawing Sheet</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="threeD" checked>
+                                            </span>
+                                            <label class="form-control">3D View</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="detail" checked>
+                                            </span>
+                                            <label class="form-control">Detail</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="elevation" checked>
+                                            </span>
+                                            <label class="form-control">Elevation</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="floorPlan" checked>
+                                            </span>
+                                            <label class="form-control">Floor Plan</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="section" checked>
+                                            </span>
+                                            <label class="form-control">Section</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="rendering" checked>
+                                            </span>
+                                            <label class="form-control">Rendering</label>
+                                        </div>
+                                        <div style="text-align: left;">
+                                            <label>Nota: Este ejemplo sólo exporta máximo 5 vistas.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </form>
+
+                        <div class="btn-group btn-lg">
+                            <div style="padding-top: 10px;">
+                                <button class="btn btn-primary" id="startWorkitem">
+                                    <span class="glyphicon glyphicon-play"></span> Exportar
+                                </button>
+                                <button class="btn btn-primary" id="cancelBtn" disabled>
+                                    <span class="glyphicon glyphicon-stop"></span> Cancelar
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div style="text-align: left;">
+                                <label id="statusText">
+                                    <h4>Progreso</h4>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <div class="progress progress-striped active">
+                                    <div id="parametersUpdateProgressBar" class="progress-bar progress-bar-success"
+                                         role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                         style="width: 0%;">
+                                        <span class="sr-only">0% completado</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- fin style="padding-top: 10px; text-align: center;" -->
+                </div> <!-- fin row -->
+            </div> <!-- fin col-sm-3 fill -->
+        </div> <!-- fin row fill -->
+    </div> <!-- fin container-fluid fill -->
+    <!-- ==========================
+         Modal para definir AppBundle & Activity (Design Automation)
+       ========================== -->
+    <div class="modal fade" id="defineActivityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">AppBundle &amp; Activity</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <center>
+                            Define AppBundle &amp; Activity sólo una vez.<br />
+                            Vuelve a definirlos cuando cambies tu plugin (nueva versión).
+                        </center>
+                    </div>
+                    <div class="form-group">
+                        <label for="localBundles">Selecciona AppBundle local:</label>
+                        <select class="form-control" id="localBundles"></select>
+                        <b>Tip:</b> Archivos .ZIP en la carpeta <b>/bundles/</b>
+                    </div>
+                    <div class="form-group">
+                        <label for="engines">Selecciona motor (Revit 2022-2023):</label>
+                        <select class="form-control" id="engines"></select>
+                    </div>
+                    Para este ejemplo, el nombre del .ZIP se usa como sufijo para <b>AppBundle</b> y <b>Activity</b>.
+                    <div style="text-align: left;">
+                        <label id="configText">
+                            <h4>Estado</h4>
+                        </label>
+                    </div>
+                    <div>
+                        <div class="progress progress-striped active">
+                            <div id="configProgressBar" class="progress-bar progress-bar-success" role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                <span class="sr-only">0% completado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="createAppBundleActivity">Crear/Actualizar</button>
+                    <button class="btn btn-danger" id="clearAccount">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================
+         Modal para habilitar BIM 360
+       ========================== -->
+    <div class="modal fade" id="provisionAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">¡Gracias por usar este ejemplo!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Para ver tus archivos de BIM 360 Docs en esta aplicación, autoriza mi Client ID de APS en tu cuenta BIM 360 Docs.
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#provisionAccountStepsModal">
+                            Muéstrame los pasos
+                            <span class="glyphicon glyphicon-new-window"></span>
+                        </button>
+                    </p>
+                    Usa este Client ID:
+                    <div class="input-group">
+                        <input type="text" readonly="true" aria-describedby="CopyClientID" id="ClientID" class="form-control" value="" />
+                        <span class="input-group-addon" style="cursor: pointer" data-clipboard-target="#ClientID" id="CopyClientID">
+                            Copiar
+                        </span>
+                    </div>
+                    Y este nombre de aplicación:
+                    <div class="input-group">
+                        <input type="text" readonly="true" aria-describedby="CopyAppName" id="AppName" class="form-control" value="Export to PDF Sample" />
+                        <span class="input-group-addon" style="cursor: pointer" data-clipboard-target="#AppName" id="CopyAppName">
+                            Copiar
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="provisionAccountSave">Hecho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================
+         Modal de ayuda para habilitar BIM 360
+       ========================== -->
+    <div class="modal fade" id="provisionAccountStepsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Guía paso a paso</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Para acceder a tus archivos BIM 360 Docs en esta app, vincula tu cuenta BIM 360 a la aplicación.</p>
+                    <ol>
+                        <li>
+                            Inicia sesión en
+                            <a href="https://bim360enterprise.autodesk.com/" target="_blank">BIM 360 Account Administration</a>.
+                            Necesitas permisos de administrador.
+                        </li>
+                        <li>Si tienes más de una cuenta, elige la que deseas vincular.</li>
+                        <li>En la barra de herramientas, ve a <strong>SETTINGS &gt; Apps &amp; Integrations</strong>.</li>
+                        <li>Haz clic en <strong>Add Integration</strong>.</li>
+                        <li>Selecciona <strong>BIM 360 Account Administration</strong> y <strong>BIM 360 Docs</strong>, luego <strong>Next</strong>.</li>
+                        <li>Selecciona <strong>I’m the developer</strong> y clic en <strong>Next</strong>.</li>
+                        <li>Ingresa el <strong>APS Client ID</strong> y <strong>App Name</strong> provistos.</li>
+                        <li>Marca <strong>I have saved the Account ID information securely</strong>.</li>
+                        <li>Haz clic en <strong>Save</strong>.</li>
+                        <p>¡Listo! Ahora puedes acceder a tus archivos de BIM 360 Docs.</p>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Entendido, gracias</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para Clipboard (copiar en modals) -->
+    <script>
+        new Clipboard('.input-group-addon');
+    </script>
+
+    <!-- Frame oculto (Logout) -->
+    <iframe id="hiddenFrame" style="visibility: hidden; display: none"></iframe>
+
+    <!-- ==========================
+         Scripts de tu proyecto
+       ========================== -->
+    <script src="/js/viewer.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/main.js"></script>
+
+    <!-- Opcionalmente, si tienes scripts para PDF: pdfExport.js, daConfigure.js, etc.
+         <script src="/js/pdfExport.js"></script>
+         <script src="/js/daConfigure.js"></script>
+    -->
+
+</body>
+</html>
